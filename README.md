@@ -35,11 +35,11 @@ Mudar de sub-sessão:`Ctrl A, "` usar `shift + '` para fazer o `"`
 
 **(2)** Rode na segunda sub-sessão para transmitir os dados do laser para o computador.
 
-	  roslaunch turtlebot3_bringup turtlebot3_lidar.launch
+    roslaunch turtlebot3_bringup turtlebot3_lidar.launch
 
 **(3)** Rode na terceira sub-sessão para iniciar o serviço de stream da câmera.
 
-	  roslaunch raspicam_node camerav2_640x480_30fps.launch
+    roslaunch raspicam_node camerav2_640x480_30fps.launch
 
 ## No terminal bash do seu computador
 
@@ -54,19 +54,19 @@ Rode `sudo code ~/.bashrc` e verifique que:
         
 **(3)** Agora execute:
 
-        roscore
+    roscore
 
 **(4)** Para abrir o turtlebot:
 
-	      rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
+    rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 
 **(5)** Sempre que a câmera estiver invertida, rode para ajustá-la:
 
-      	rosrun rqt_reconfigure rqt_reconfigure
+    rosrun rqt_reconfigure rqt_reconfigure
 
 **(6)** Para acionar o comando por teclas:
 
-        roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+    roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
         
 ## No robô novamente, para desligar
 
