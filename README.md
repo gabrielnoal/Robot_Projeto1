@@ -26,8 +26,10 @@ Primeiramente precisamos do gerenciador de sessões, para fazer caber vários te
     screen
   
 Atalhos do screen:
+
 Cria uma sub-sessão:`Ctrl A, C`
-Mudar de sub-sessão:`Ctrl A, "` usar `shift + '` para fazer o `"`
+
+Mudar de sub-sessão:`Ctrl A, "` (usar `shift + '` para fazer o `"`)
 
 **(1)** Rode na primeira sub-sessão para conectar a Raspberry a placa de cima do robo.
   
@@ -48,9 +50,12 @@ Rode `sudo code ~/.bashrc` e verifique que:
 **(1)**`export IPBerry=`IP que aparece no robo.
 
 **(2)**	`export ROS_MASTER_URI="http://"$IPBerry":11311"`
+
         `export ROS_IP=hostname -I`
+	
         `export TURTLEBOT3_MODEL=burger`
-        Estão no seu arquivo ~/.bashrc
+	
+Estão no seu arquivo ~/.bashrc
         
 **(3)** Agora execute:
 
