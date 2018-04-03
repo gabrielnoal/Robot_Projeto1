@@ -41,7 +41,7 @@ Mudar de sub-sessão:`Ctrl A, "` (usar `shift + '` para fazer o `"`)
 
 **(3)** Rode na terceira sub-sessão para iniciar o serviço de stream da câmera.
 
-    roslaunch raspicam_node camerav2_640x480_30fps.launch
+    roslaunch raspicam_node camerav2_410x308_30fps.launch
 
 ## No terminal bash do seu computador
 
