@@ -51,6 +51,12 @@ Passará a ficar assim:
 
 	recebedor = rospy.Subscriber("/cv_camera/image_raw/compressed", CompressedImage, roda_todo_frame, queue_size=1, buff_size = 2**24)
 
+## Para ver se a webcam esta funcionando
+
+Digite no terminal
+
+	rqt_image_view 
+
 Boa sorte!
 
 
