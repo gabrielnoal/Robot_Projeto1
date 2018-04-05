@@ -27,11 +27,11 @@ def identifica_cor(frame):
 	# do vermelho:
 	frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-	cor_menor = np.array([0, 50, 50])
+	cor_menor = np.array([0, int(0.40*255), int(0.3*255)])
 	cor_maior = np.array([8, 255, 255])
 	segmentado_cor = cv2.inRange(frame_hsv, cor_menor, cor_maior)
 
-	cor_menor = np.array([172, 50, 50])
+	cor_menor = np.array([172, int(0.40*255), int(0.3*255)])
 	cor_maior = np.array([180, 255, 255])
 	segmentado_cor += cv2.inRange(frame_hsv, cor_menor, cor_maior)
 
@@ -66,8 +66,8 @@ def identifica_cor(frame):
 
 	# Representa a area e o centro do maior contorno no frame
 	font = cv2.FONT_HERSHEY_COMPLEX_SMALL
-	cv2.putText(frame,"{:d} {:d}".format(*media),(20,100), 1, 4,(255,255,255),2,cv2.LINE_AA)
-	cv2.putText(frame,"{:0.1f}".format(maior_contorno_area),(20,50), 1, 4,(255,255,255),2,cv2.LINE_AA)
+	cv2.putText(frame,"Mèdia: {:d} {:d}".format(*media),(20,100), 1, 4,(255,255,255),2,cv2.LINE_AA)
+	cv2.putText(frame,"Maior contorno:{:0.1f}".format(maior_contorno_area),(20,50), 1, 4,(255,255,255),2,cv2.LINE_AA)
 
 	cv2.imshow('video', frame)
 	cv2.imshow('seg', segmentado_cor)
