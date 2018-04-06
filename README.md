@@ -49,13 +49,10 @@ Mudar de sub-sessão:`Ctrl A, "` (usar `shift + '` para fazer o `"`)
 
 Rode `sudo code ~/.bashrc` e verifique que:
 
-	`export IPBerry= 192.168.0.113` Este Ip é um exemplo. Voçê deve usar o IP que aparece no robo.
-
-	`export ROS_MASTER_URI="http://"$IPBerry":11311"`
-
-        `export ROS_IP=hostname -I`
-	
-        `export TURTLEBOT3_MODEL=burger`
+    export IPBerry= 192.168.0.113  ##Este Ip é um exemplo. Voçê deve usar o IP que aparece no robo.
+    export ROS_MASTER_URI="http://"$IPBerry":11311"
+    export ROS_IP=hostname -I
+    export TURTLEBOT3_MODEL=burger
 	
 Estão no seu arquivo ~/.bashrc
         
