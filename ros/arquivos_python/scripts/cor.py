@@ -84,7 +84,7 @@ if __name__=="__main__":
 				cv2.putText(cv_image, "dif_y: {0}".format(dif_y), (10,300),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(255,255,255))
 
 				if math.fabs(dif_x)<40: # Se a media estiver muito proxima do centro anda para tras
-					vel = Twist(Vector3(0.3,0,0), Vector3(0,0,0))
+					vel = Twist(Vector3(-0.3,0,0), Vector3(0,0,0))
 
 				else:
 					if dif_x > 0: # Vira a direita
