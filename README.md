@@ -45,11 +45,13 @@ Mudar de sub-sessão:`Ctrl A, "` (usar `shift + '` para fazer o `"`)
 
 ## No terminal bash do seu computador
 
+**(1)**
+
 Rode `sudo code ~/.bashrc` e verifique que:
 
-**(1)**`export IPBerry=`IP que aparece no robo.
+	`export IPBerry= 192.168.0.113` Este Ip é um exemplo. Voçê deve usar o IP que aparece no robo.
 
-**(2)**	`export ROS_MASTER_URI="http://"$IPBerry":11311"`
+	`export ROS_MASTER_URI="http://"$IPBerry":11311"`
 
         `export ROS_IP=hostname -I`
 	
@@ -57,19 +59,19 @@ Rode `sudo code ~/.bashrc` e verifique que:
 	
 Estão no seu arquivo ~/.bashrc
         
-**(3)** Agora execute:
+**(2)** Agora execute:
 
     roscore
 
-**(4)** Para abrir o turtlebot:
+**(3)** Para abrir o turtlebot:
 
     rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 
-**(5)** Sempre que a câmera estiver invertida, rode para ajustá-la:
+**(4)** Sempre que a câmera estiver invertida, rode para ajustá-la:
 
     rosrun rqt_reconfigure rqt_reconfigure
 
-**(6)** Para acionar o comando por teclas:
+**(5)** Para acionar o comando por teclas:
 
     roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
         
