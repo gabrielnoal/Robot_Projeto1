@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -18,8 +21,8 @@ import math
 from math import pi
 from __future__ import print_function
 import sys
-    
-    
+
+
 def matches(frame)
     imagem = 'leite.jpg'
 
@@ -32,7 +35,7 @@ def matches(frame)
 
     MIN_MATCH_COUNT = 20
     img1 = cv2.imread(imagem,0)          # Imagem a procurar
-    img2 = frame 
+    img2 = frame
 
     # Initiate SIFT detector
     sift = cv2.xfeatures2d.SIFT_create()
@@ -82,7 +85,7 @@ def matches(frame)
                      #1o varia de 0(esquerda) a 1000(direita)
     else:
          media = (0, 0)
-    
+
     centro = (frame.shape[0]//2, frame.shape[1]//2)
 
 

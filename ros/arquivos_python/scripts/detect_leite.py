@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+
 import rospy
 import tf
 import math
@@ -5,7 +8,7 @@ from geometry_msgs.msg import Twist, Vector3, Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
-import detect_feature
+import detect_feature.py
 
 import cv2
 import numpy as np
@@ -45,7 +48,7 @@ def roda_todo_frame(imagem):  ### DESCOBRIR SE ESSA FUNÇÃO É NECESSÁRIA
 	print("delay ", "{:.3f}".format(delay/1.0E9))
 	if delay > atraso and check_delay==True:
 		print("Descartando por causa do delay do frame:", delay)
-		return 
+		return
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
@@ -62,7 +65,7 @@ if __name__=="__main__":
 
     # Para usar a Raspberry Pi
 	topico_raspberry_camera = "/raspicam_node/image/compressed"
-	# Para usar a webcam 
+	# Para usar a webcam
 	topico_webcam = "/cv_camera/image_raw/compressed"
 
 
@@ -71,7 +74,7 @@ if __name__=="__main__":
     recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=4, buff_size = 2**24) #ONDE USAR?#
 
 	print("Usando ", topico_imagem)
-    
+
 print("Usando ", topico_imagem)
 
 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
@@ -100,5 +103,3 @@ print("Usando ", topico_imagem)
 
 	except rospy.ROSInterruptException:
 	    print("Ocorreu uma exceção com o rospy")
-
-        
