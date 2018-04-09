@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- coding:utf-8 -*-
-
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -19,10 +16,14 @@ import smach_ros
 import matplotlib.cm as cm
 import math
 from math import pi
-from __future__ import print_function
 import sys
+<<<<<<< HEAD
 
 
+=======
+    
+    
+>>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
 def matches(frame):
     imagem = 'leite.jpg'
 
@@ -35,7 +36,7 @@ def matches(frame):
 
     MIN_MATCH_COUNT = 20
     img1 = cv2.imread(imagem,0)          # Imagem a procurar
-    img2 = frame
+    img2 = frame 
 
     # Initiate SIFT detector
     sift = cv2.xfeatures2d.SIFT_create()
@@ -60,10 +61,21 @@ def matches(frame):
         if m.distance < 0.7*n.distance:
             good.append(m)
 
+<<<<<<< HEAD
+=======
+    cor_menor = np.array([80, int(0.5*255), int(0.2*255)])
+    cor_maior = np.array([120,255,255])
+    segmentado_cor = cv2.inRange(frame_hsv, cor_menor, cor_maior)
+    kernel = np.ones((1,1))
+    segmentado_cor = cv2.morphologyEx(segmentado_cor, cv2.MORPH_CLOSE, kernel)
+    img_out, contornos, arvore = cv2.findContours(segmentado_cor.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+>>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
     maior_contorno = None
     maior_contorno_area = 0
 
     for cnt in contornos:
+<<<<<<< HEAD
 	    area = cv2.contourArea(cnt)
 	    if area > maior_contorno_area:
 	        maior_contorno = cnt
@@ -71,16 +83,21 @@ def matches(frame):
 
     # Encontramos o centro do contorno fazendo a média de todos seus pontos.
     if not maior_contorno is None : #Para não dar erro caso não ache o maior_contorno
+=======
+        area = cv2.contourArea(cnt)
+	if area > maior_contorno_area:
+	    maior_contorno = cnt
+	    maior_contorno_area = area
+
+    if not maior_contorno is None :
+>>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
         # print(maior_contorno)
         maior_contorno = np.reshape(maior_contorno, (maior_contorno.shape[0], 2))
         media = maior_contorno.mean(axis=0)
         media = media.astype(np.int32)
-        # print(media) #Tupla onde o primeiro inteiro é a posição media na
-                     #horizontal e o segunodo é na vertical
-                     #1o varia de 0(esquerda) a 1000(direita)
     else:
          media = (0, 0)
-
+    
     centro = (frame.shape[0]//2, frame.shape[1]//2)
 
 
