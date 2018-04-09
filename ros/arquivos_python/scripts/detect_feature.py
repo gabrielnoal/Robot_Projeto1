@@ -61,8 +61,6 @@ def matches(frame):
         if m.distance < 0.7*n.distance:
             good.append(m)
 
-<<<<<<< HEAD
-=======
     cor_menor = np.array([80, int(0.5*255), int(0.2*255)])
     cor_maior = np.array([120,255,255])
     segmentado_cor = cv2.inRange(frame_hsv, cor_menor, cor_maior)
@@ -70,12 +68,10 @@ def matches(frame):
     segmentado_cor = cv2.morphologyEx(segmentado_cor, cv2.MORPH_CLOSE, kernel)
     img_out, contornos, arvore = cv2.findContours(segmentado_cor.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
->>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
     maior_contorno = None
     maior_contorno_area = 0
 
     for cnt in contornos:
-<<<<<<< HEAD
 	    area = cv2.contourArea(cnt)
 	    if area > maior_contorno_area:
 	        maior_contorno = cnt
@@ -83,14 +79,6 @@ def matches(frame):
 
     # Encontramos o centro do contorno fazendo a média de todos seus pontos.
     if not maior_contorno is None : #Para não dar erro caso não ache o maior_contorno
-=======
-        area = cv2.contourArea(cnt)
-	if area > maior_contorno_area:
-	    maior_contorno = cnt
-	    maior_contorno_area = area
-
-    if not maior_contorno is None :
->>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
         # print(maior_contorno)
         maior_contorno = np.reshape(maior_contorno, (maior_contorno.shape[0], 2))
         media = maior_contorno.mean(axis=0)
