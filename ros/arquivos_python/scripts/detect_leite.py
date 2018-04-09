@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist, Vector3, Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
-import cormodule
+import detect_feature
 
 import cv2
 import numpy as np
