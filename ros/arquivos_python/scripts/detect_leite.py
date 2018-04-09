@@ -35,7 +35,7 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 
-def roda_todo_frame(imagem):  ### DESCOBRIR SE ESSA FUNÇÃO É NECESSÁRIA
+def roda_todo_frame(imagem):
 	#print("frame")
 	global cv_image
 	global media
@@ -69,9 +69,7 @@ if __name__=="__main__":
 
     topico_imagem = topico_raspberry_camera
 
-    recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=4, buff_size = 2**24) #ONDE USAR?#
-
-    print("Usando ", topico_imagem)
+    recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=4, buff_size = 2**24) 
 
     print("Usando ", topico_imagem)
 
