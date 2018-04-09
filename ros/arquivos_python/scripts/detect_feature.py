@@ -23,7 +23,7 @@ from __future__ import print_function
 import sys
 
 
-def matches(frame)
+def matches(frame):
     imagem = 'leite.jpg'
 
     frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -60,7 +60,7 @@ def matches(frame)
         if m.distance < 0.7*n.distance:
             good.append(m)
 
-        maior_contorno = None
+    maior_contorno = None
     maior_contorno_area = 0
 
     for cnt in contornos:
@@ -69,11 +69,6 @@ def matches(frame)
 	        maior_contorno = cnt
 	        maior_contorno_area = area
 
-    ''' PARTE DA MÉDIA E AREA'''
-    '''Pega cada item Y da lista maior_contorno e salva em outra lista pra
-    depois pegar o maximo e minimo'''
-    array_y=[]
-    distancia_cm = ""
     # Encontramos o centro do contorno fazendo a média de todos seus pontos.
     if not maior_contorno is None : #Para não dar erro caso não ache o maior_contorno
         # print(maior_contorno)

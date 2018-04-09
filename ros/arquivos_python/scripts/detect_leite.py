@@ -27,16 +27,8 @@ atraso = 1.5E9 # 1 segundo e meio. Em nanossegundos
 area = 0.0 # Variavel com a area do maior contorno
 check_delay = False # Só usar se os relógios ROS da Raspberry e do Linux desktop estiverem sincronizados. Descarta imagens que chegam atrasadas demais
 
-
-imagem = 'leite.jpg'
-leite = cv2.imread(imagem, cv2.IMREAD_GRAYSCALE)
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-
-
-def roda_todo_frame(imagem):  ### DESCOBRIR SE ESSA FUNÇÃO É NECESSÁRIA
-	print("frame")
+def roda_todo_frame(imagem): 
+	#print("frame")
 	global cv_image
 	global media
 	global centro
@@ -60,23 +52,19 @@ def roda_todo_frame(imagem):  ### DESCOBRIR SE ESSA FUNÇÃO É NECESSÁRIA
 
 if __name__=="__main__":
     rospy.init_node("detect_leite")
-
     # Para usar a Raspberry Pi
 	topico_raspberry_camera = "/raspicam_node/image/compressed"
 	# Para usar a webcam
 	topico_webcam = "/cv_camera/image_raw/compressed"
-
-
     topico_imagem = topico_raspberry_camera
-
     recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=4, buff_size = 2**24) #ONDE USAR?#
-
 	print("Usando ", topico_imagem)
-
-print("Usando ", topico_imagem)
-
 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
 
+
+	imagem = 'leite.jpg'
+	leite = cv2.imread(imagem, cv2.IMREAD_GRAYSCALE)
+	
 	try:
 
 		while not rospy.is_shutdown():
