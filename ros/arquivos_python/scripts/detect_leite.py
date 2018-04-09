@@ -59,9 +59,7 @@ def roda_todo_frame(imagem):  ### DESCOBRIR SE ESSA FUNÇÃO É NECESSÁRIA
 		print('ex', e)
 
 if __name__=="__main__":
-    '''
-    rospy.init_node(" ")
-    '''
+    rospy.init_node("detect_leite")
 
     # Para usar a Raspberry Pi
 	topico_raspberry_camera = "/raspicam_node/image/compressed"
