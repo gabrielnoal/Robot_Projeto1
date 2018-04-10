@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -18,18 +19,10 @@ import math
 from math import pi
 import sys
 
-def matches(frame):
-    imagem = 'leite.jpg'
-
-    frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+def matches(frame, imagem_leite):
     frame = cv2.blur(frame,(5,5)) # Tira ruido
 
-    centro = (frame.shape[0]//2, frame.shape[1]//2)
-
-
-
-    MIN_MATCH_COUNT = 20
-    img1 = cv2.imread(imagem,0)          # Imagem a procurar
+    img1 = imagem_leite        # Imagem a procurar
     img2 = frame 
 
     # Initiate SIFT detector
