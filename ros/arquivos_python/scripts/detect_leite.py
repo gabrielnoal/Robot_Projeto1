@@ -55,7 +55,6 @@ if __name__=="__main__":
 
     imagem_leite = 'leite.jpg'
     imagem_leite = cv2.imread(imagem_leite,0)
-    imagem_leite = cv2.cvtColor(imagem_leite, cv2.COLOR_BGR2GRAY)  
 
 
     # Para usar a Raspberry Pi
