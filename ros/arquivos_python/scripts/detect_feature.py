@@ -17,13 +17,7 @@ import matplotlib.cm as cm
 import math
 from math import pi
 import sys
-<<<<<<< HEAD
 
-
-=======
-    
-    
->>>>>>> 94c77828578c66c4276a5b5f24130853e5edc20d
 def matches(frame):
     imagem = 'leite.jpg'
 
@@ -60,33 +54,4 @@ def matches(frame):
     for m,n in matches:
         if m.distance < 0.7*n.distance:
             good.append(m)
-
-    cor_menor = np.array([80, int(0.5*255), int(0.2*255)])
-    cor_maior = np.array([120,255,255])
-    segmentado_cor = cv2.inRange(frame_hsv, cor_menor, cor_maior)
-    kernel = np.ones((1,1))
-    segmentado_cor = cv2.morphologyEx(segmentado_cor, cv2.MORPH_CLOSE, kernel)
-    img_out, contornos, arvore = cv2.findContours(segmentado_cor.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-    maior_contorno = None
-    maior_contorno_area = 0
-
-    for cnt in contornos:
-	    area = cv2.contourArea(cnt)
-	    if area > maior_contorno_area:
-	        maior_contorno = cnt
-	        maior_contorno_area = area
-
-    # Encontramos o centro do contorno fazendo a média de todos seus pontos.
-    if not maior_contorno is None : #Para não dar erro caso não ache o maior_contorno
-        # print(maior_contorno)
-        maior_contorno = np.reshape(maior_contorno, (maior_contorno.shape[0], 2))
-        media = maior_contorno.mean(axis=0)
-        media = media.astype(np.int32)
-    else:
-         media = (0, 0)
-    
-    centro = (frame.shape[0]//2, frame.shape[1]//2)
-
-
-    return media, centro, good
+    return good
