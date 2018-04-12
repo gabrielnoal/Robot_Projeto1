@@ -21,7 +21,6 @@ import math
 
 bridge = CvBridge()
 cv_image = None
-imagem_leite = None
 good_matches = []
 atraso = 3E9 # 1 segundo e meio. Em nanossegundos
 check_delay = True # Só usar se os relógios ROS da Raspberry e do Linux desktop estiverem sincronizados. Descarta imagens que chegam atrasadas demais
@@ -71,7 +70,7 @@ if __name__=="__main__":
 
         while not rospy.is_shutdown():
             vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
-            if good_matches > 30:
+            if len(good_matches) > 30:
 		print("Achei")
 	        vel = Twist(Vector3(0.3,0,0), Vector3(0,0,0))
 
