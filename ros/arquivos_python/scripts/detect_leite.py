@@ -71,8 +71,8 @@ if __name__=="__main__":
 
         while not rospy.is_shutdown():
             vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
-            if good_matches > 20:
-		print(good_matches)
+            if good_matches > 30:
+		print("Achei")
 	        vel = Twist(Vector3(0.3,0,0), Vector3(0,0,0))
 
             else:   # Vira a esquerda
