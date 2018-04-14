@@ -56,6 +56,15 @@ if __name__=="__main__":
     imagem_leite = 'leite.jpg'
     imagem_leite = cv2.imread(imagem_leite,0)
 
+    # Initiate SIFT detector
+    sift = cv2.xfeatures2d.SIFT_create()
+
+    # find the keypoints and descriptors with SIFT in each image
+    kp1, des1 = sift.detectAndCompute(img1,None)
+
+    FLANN_INDEX_KDTREE = 0
+    index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+    search_params = dict(checks = 50)
 
     # Para usar a Raspberry Pi
     topico_raspberry_camera = "/raspicam_node/image/compressed"
