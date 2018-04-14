@@ -43,7 +43,7 @@ def roda_todo_frame(imagem):
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		good_matches =  detect_feature.matches(cv_image, imagem_leite, kp1, des1, index_params, search_params)
+		good_matches =  detect_feature.matches(cv_image, imagem_leite)
 		depois = time.clock()
 		cv2.imshow("Camera", cv_image)
 	except CvBridgeError as e:
