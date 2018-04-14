@@ -26,11 +26,15 @@ good_matches = []
 atraso = 1E9 # 1 segundo e meio. Em nanossegundos
 check_delay = True # Só usar se os relógios ROS da Raspberry e do Linux desktop estiverem sincronizados. Descarta imagens que chegam atrasadas demais
 
-def roda_todo_frame(imagem, kp1, des1, index_params, search_params):
+def roda_todo_frame(imagem):
 	# print("frame")
 	global cv_image
 	global good_matches
 	global imagem_leite
+	global kp1
+	global des1
+	global index_params
+	global search_params
 
 	now = rospy.get_rostime()
 	imgtime = imagem.header.stamp
