@@ -60,7 +60,7 @@ if __name__=="__main__":
     sift = cv2.xfeatures2d.SIFT_create()
 
     # find the keypoints and descriptors with SIFT in each image
-    kp1, des1 = sift.detectAndCompute(img1,None)
+    kp1, des1 = sift.detectAndCompute(imagem_leite,None)
 
     FLANN_INDEX_KDTREE = 0
     index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
