@@ -3,7 +3,7 @@
 
 __author__ = ["Rachel P. B. Moraes", "Igor Montagner", "Fabio Miranda"]
 
-
+import le_scan
 import rospy
 import numpy as np
 import tf
@@ -55,7 +55,7 @@ def roda_todo_frame(imagem):
 	lag = now-imgtime
 	delay = lag.secs
 	if delay > atraso and check_delay==True:
-		return 
+		return
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
@@ -64,7 +64,7 @@ def roda_todo_frame(imagem):
 		cv2.imshow("Camera", cv_image)
 	except CvBridgeError as e:
 		print('ex', e)
-	
+
 
 
 
@@ -96,6 +96,12 @@ class Girando(smach.State):
 			velocidade_saida.publish(vel)
 			return 'alinhou'
 
+class SOBREVIVENDO(object):
+	def __init__(self, userdata):
+		smach.State.__init__(self, outcomes=["Ok", "SOBREVIVENDO"])
+
+	def execute(self, userdata):
+		global velocidade_saida
 
 class Centralizado(smach.State):
     def __init__(self):
@@ -121,7 +127,7 @@ def main():
 	global buffer
 	rospy.init_node('cor_estados')
 
-	# Para usar a webcam 
+	# Para usar a webcam
 	#recebedor = rospy.Subscriber("/cv_camera/image_raw/compressed", CompressedImage, roda_todo_frame, queue_size=1, buff_size = 2**24)
 	recebedor = rospy.Subscriber("/raspicam_node/image/compressed", CompressedImage, roda_todo_frame, queue_size=10, buff_size = 2**24)
 
@@ -133,10 +139,10 @@ def main():
 	# Open the container
 	with sm:
 	    # Add states to the container
-	    #smach.StateMachine.add('LONGE', Longe(), 
-	    #                       transitions={'ainda_longe':'ANDANDO', 
+	    #smach.StateMachine.add('LONGE', Longe(),
+	    #                       transitions={'ainda_longe':'ANDANDO',
 	    #                                    'perto':'terminei'})
-	    #smach.StateMachine.add('ANDANDO', Andando(), 
+	    #smach.StateMachine.add('ANDANDO', Andando(),
 	    #                       transitions={'ainda_longe':'LONGE'})
 	    smach.StateMachine.add('GIRANDO', Girando(),
 	                            transitions={'girando': 'GIRANDO',

@@ -23,18 +23,9 @@ def matches(frame, imagem_leite):
     frame = cv2.blur(frame,(5,5)) # Tira ruido
 
     img1 = imagem_leite        # Imagem a procurar
-    img2 = frame 
+    img2 = frame
 
-    # Initiate SIFT detector
-    sift = cv2.xfeatures2d.SIFT_create()
-
-    # find the keypoints and descriptors with SIFT in each image
-    kp1, des1 = sift.detectAndCompute(img1,None)
     kp2, des2 = sift.detectAndCompute(img2,None)
-
-    FLANN_INDEX_KDTREE = 0
-    index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-    search_params = dict(checks = 50)
 
     # Configura o algoritmo de casamento de features
     flann = cv2.FlannBasedMatcher(index_params, search_params)
@@ -47,4 +38,5 @@ def matches(frame, imagem_leite):
     for m,n in matches:
         if m.distance < 0.7*n.distance:
             good.append(m)
+
     return good

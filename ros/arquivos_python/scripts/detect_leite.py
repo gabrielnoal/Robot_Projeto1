@@ -21,12 +21,13 @@ import math
 
 bridge = CvBridge()
 cv_image = None
+imagem_leite = None
 good_matches = []
-atraso = 3E9 # 1 segundo e meio. Em nanossegundos
+atraso = 0.5E9 # 1 segundo e meio. Em nanossegundos
 check_delay = True # Só usar se os relógios ROS da Raspberry e do Linux desktop estiverem sincronizados. Descarta imagens que chegam atrasadas demais
 
-def roda_todo_frame(imagem): 
-	print("frame")
+def roda_todo_frame(imagem):
+	# print("frame")
 	global cv_image
 	global good_matches
 	global imagem_leite
@@ -61,7 +62,7 @@ if __name__=="__main__":
     # Para usar a webcam
     topico_webcam = "/cv_camera/image_raw/compressed"
     topico_imagem = topico_raspberry_camera
-    recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=10, buff_size = 2**24) 
+    recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=10, buff_size = 2**24)
     print("Usando ", topico_imagem)
     velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
 
@@ -71,11 +72,11 @@ if __name__=="__main__":
         while not rospy.is_shutdown():
             vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
             if len(good_matches) > 30:
-		print("Achei")
-	        vel = Twist(Vector3(0.3,0,0), Vector3(0,0,0))
+				print("Achei")
+				vel = Twist(Vector3(-0.3,0,0), Vector3(0,0,0))
 
             else:   # Vira a esquerda
-	        vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
+	        	vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
 
             velocidade_saida.publish(vel)
             rospy.sleep(0.01)
