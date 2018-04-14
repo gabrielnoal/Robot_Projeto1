@@ -19,7 +19,7 @@ import math
 from math import pi
 import sys
 
-def matches(frame, imagem_leite, kp1, des1, index_params, search_params):
+def matches(frame, imagem_leite):
     frame = cv2.blur(frame,(5,5)) # Tira ruido
     img2 = frame
 
