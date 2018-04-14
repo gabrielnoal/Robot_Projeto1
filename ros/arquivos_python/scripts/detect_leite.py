@@ -31,7 +31,6 @@ def roda_todo_frame(imagem):
 	global cv_image
 	global good_matches
 	global imagem_leite
-	global sift
 
 	now = rospy.get_rostime()
 	imgtime = imagem.header.stamp
@@ -56,16 +55,6 @@ if __name__=="__main__":
 
     imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
     imagem_leite = cv2.imread(imagem_leite,0)
-
-    # Initiate SIFT detector
-    sift = cv2.xfeatures2d.SIFT_create()
-
-    # find the keypoints and descriptors with SIFT in each image
-    kp1, des1 = sift.detectAndCompute(imagem_leite,None)
-
-    FLANN_INDEX_KDTREE = 0
-    index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-    search_params = dict(checks = 50)
 
     # Para usar a Raspberry Pi
     topico_raspberry_camera = "/raspicam_node/image/compressed"
