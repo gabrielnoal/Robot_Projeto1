@@ -31,10 +31,7 @@ def roda_todo_frame(imagem):
 	global cv_image
 	global good_matches
 	global imagem_leite
-	global kp1
-	global des1
-	global index_params
-	global search_params
+	global sift
 
 	now = rospy.get_rostime()
 	imgtime = imagem.header.stamp
