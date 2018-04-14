@@ -23,7 +23,7 @@ bridge = CvBridge()
 cv_image = None
 imagem_leite = None
 good_matches = []
-atraso = 0.5E9 # 1 segundo e meio. Em nanossegundos
+atraso = 1E9 # 1 segundo e meio. Em nanossegundos
 check_delay = True # Só usar se os relógios ROS da Raspberry e do Linux desktop estiverem sincronizados. Descarta imagens que chegam atrasadas demais
 
 def roda_todo_frame(imagem):
@@ -53,7 +53,7 @@ if __name__=="__main__":
 
     rospy.init_node("detect_leite")
 
-    imagem_leite = 'leite.jpg'
+    imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
     imagem_leite = cv2.imread(imagem_leite,0)
 
     # Initiate SIFT detector

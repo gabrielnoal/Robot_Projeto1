@@ -21,8 +21,6 @@ import sys
 
 def matches(frame, imagem_leite):
     frame = cv2.blur(frame,(5,5)) # Tira ruido
-
-    img1 = imagem_leite        # Imagem a procurar
     img2 = frame
 
     kp2, des2 = sift.detectAndCompute(img2,None)
