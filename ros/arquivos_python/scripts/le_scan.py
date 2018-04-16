@@ -40,12 +40,12 @@ def scaneou(dado):
 			elif 270 < i < 360 and lista_valores[i] == distancia:
 				velocidade = Twist(Vector3(-2, 0, 0), Vector3(0, 0, 2))
 				print("VAI BATER - NE")
-
-		velocidade_saida.publish(velocidade)
-
+		
+		return True
 	else:
 		print("OK")
 		iteracoes += 1
+		return False
 
 if __name__=="__main__":
 
