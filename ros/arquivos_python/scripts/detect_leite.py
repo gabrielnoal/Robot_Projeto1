@@ -43,7 +43,7 @@ def roda_todo_frame(imagem):
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		good_matches =  detect_feature.matches(cv_image, imagem_leite)
+		good_matches =  detect_feature.matches(cv_image, kp1, des1, sift)
 		depois = time.clock()
 		cv2.imshow("Camera", cv_image)
 	except CvBridgeError as e:
@@ -51,34 +51,38 @@ def roda_todo_frame(imagem):
 
 if __name__=="__main__":
 
-    rospy.init_node("detect_leite")
+	rospy.init_node("detect_leite")
+	# Initiate SIFT detector
+	sift = cv2.xfeatures2d.SIFT_create()
+	imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
+	imagem_leite = cv2.imread(imagem_leite,0)
 
-    imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
-    imagem_leite = cv2.imread(imagem_leite,0)
+	kp1, des1 = sift.detectAndCompute(imagem_leite,None)
+	
 
-    # Para usar a Raspberry Pi
-    topico_raspberry_camera = "/raspicam_node/image/compressed"
-    # Para usar a webcam
-    topico_webcam = "/cv_camera/image_raw/compressed"
-    topico_imagem = topico_raspberry_camera
-    recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=10, buff_size = 2**24)
-    print("Usando ", topico_imagem)
-    velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
+	# Para usar a Raspberry Pi
+	topico_raspberry_camera = "/raspicam_node/image/compressed"
+	# Para usar a webcam
+	topico_webcam = "/cv_camera/image_raw/compressed"
+	topico_imagem = topico_raspberry_camera
+	recebedor = rospy.Subscriber(topico_imagem, CompressedImage, roda_todo_frame, queue_size=10, buff_size = 2**24)
+	print("Usando ", topico_imagem)
+	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
 
 
-    try:
+	try:
 
-        while not rospy.is_shutdown():
-            vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
-            if len(good_matches) > 30:
+		while not rospy.is_shutdown():
+			vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+			if len(good_matches) > 30:
 				print("Achei")
 				vel = Twist(Vector3(-0.3,0,0), Vector3(0,0,0))
 
-            else:   # Vira a esquerda
-	        	vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
+			else:   # Vira a esquerda
+				vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
 
-            velocidade_saida.publish(vel)
-            rospy.sleep(0.01)
+			velocidade_saida.publish(vel)
+			rospy.sleep(0.01)
 
-    except rospy.ROSInterruptException:
-        print("Ocorreu uma exceção com o rospy")
+	except rospy.ROSInterruptException:
+		print("Ocorreu uma exceção com o rospy")

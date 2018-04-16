@@ -15,6 +15,8 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 import cor_capa
+import detect_feature
+
 
 
 bridge = CvBridge()
@@ -22,7 +24,12 @@ bridge = CvBridge()
 cv_image = None
 media = []
 centro = []
-atraso = 3E9
+atraso = 1E9
+cor = None
+cor_menor = np.array([80, int(0.5*255), int(0.2*255)])
+cor_maior = np.array([120, 255, 255])
+good_matches = []
+
 
 area = 0.0 # Variavel com a area do maior contorno
 
@@ -35,6 +42,8 @@ def roda_todo_frame(imagem):
 	global cv_image
 	global media
 	global centro
+	global cor
+	global good_matches
 
 	now = rospy.get_rostime()
 	imgtime = imagem.header.stamp
@@ -47,7 +56,8 @@ def roda_todo_frame(imagem):
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		media, centro, area, distancia_cm =  cor_capa.identifica_cor(cv_image,False)
+		good_maches = detect_feature.matches(cv_image, kp1, des1, sift)
+		media, centro, area, cor =  cor_capa.identifica_cor(cv_image,cor_menor, cor_maior)
 		depois = time.clock()
 		# cv2.putText(cv_image, "Distancia: {0}".format(distancia_cm), (10,300),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(255,255,255))
 		cv2.imshow("Camera", cv_image)
@@ -57,7 +67,13 @@ def roda_todo_frame(imagem):
 
 
 if __name__=="__main__":
+	#imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
+	imagem_leite = cv2.imread("leite.png",0)
+	# Initiate SIFT detector
+	sift = cv2.xfeatures2d.SIFT_create()
 
+	kp1, des1 = sift.detectAndCompute(imagem_leite,None)
+	
 	rospy.init_node("cor")
 
 	# Para usar a Raspberry Pi
@@ -82,10 +98,12 @@ if __name__=="__main__":
 				dif_y = media[1]-centro[1]
 				cv2.putText(cv_image, "dif_x: {0}".format(dif_x), (10,200),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(255,255,255))
 				cv2.putText(cv_image, "dif_y: {0}".format(dif_y), (10,300),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(255,255,255))
+				print(len(good_matches))	 
 
-				if math.fabs(dif_x)<40: # Se a media estiver muito proxima do centro anda para tras
-					vel = Twist(Vector3(-0.3,0,0), Vector3(0,0,0))
-
+				if math.fabs(dif_x)<40: # Se a media estiver muito proxima do centro anda para frente
+					print(len(good_matches))
+					vel = Twist(Vector3(0.3,0,0), Vector3(0,0,0))
+				
 				else:
 					if dif_x > 0: # Vira a direita
 						vel = Twist(Vector3(0,0,0), Vector3(0,0,-0.3))
@@ -96,4 +114,4 @@ if __name__=="__main__":
 			rospy.sleep(0.01)
 
 	except rospy.ROSInterruptException:
-	    print("Ocorreu uma exceção com o rospy")
+		print("Ocorreu uma exceção com o rospy")

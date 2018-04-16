@@ -19,15 +19,12 @@ import math
 from math import pi
 import sys
 
-def matches(frame, imagem_leite):
+def matches(frame, kp1, des1, sift):
+
     frame = cv2.blur(frame,(5,5)) # Tira ruido
     img2 = frame
 
-    # Initiate SIFT detector
-    sift = cv2.xfeatures2d.SIFT_create()
-
     # find the keypoints and descriptors with SIFT in each image
-    kp1, des1 = sift.detectAndCompute(imagem_leite,None)
     kp2, des2 = sift.detectAndCompute(img2,None)
 
     FLANN_INDEX_KDTREE = 0
