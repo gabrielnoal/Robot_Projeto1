@@ -21,7 +21,7 @@ import sys
 
 def matches(frame, kp1, des1, sift):
 
-    frame = cv2.blur(frame,(5,5)) # Tira ruido
+    #frame = cv2.blur(frame,(5,5)) # Tira ruido
     img2 = frame
 
     # find the keypoints and descriptors with SIFT in each image

@@ -62,22 +62,16 @@ def identifica_cor(frame, cor_menor, cor_maior):
         # print(media) #Tupla onde o primeiro inteiro é a posição media na
                      #horizontal e o segunodo é na vertical
                      #1o varia de 0(esquerda) a 1000(direita)
-        cor = "Azul"
-        cv2.drawContours(frame, [maior_contorno], -1, [0, 0, 255], 5)
-        cv2.circle(frame, tuple(media), 5, [0, 255, 0])
+        #cv2.drawContours(frame, [maior_contorno], -1, [0, 0, 255], 5)
+        #cv2.circle(frame, tuple(media), 5, [0, 255, 0])
 
     else:
         media = (0, 0)
 
-    if not maior_contorno is None:
-        cv2.putText(frame, "Area:{:0.1f}".format(maior_contorno_area), (10,300),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(0,0,0))
-        cv2.putText(frame, "Horizontal: {0}".format(media[0]), (10,350),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(0,0,0))
-        cv2.putText(frame, "Vertical: {0}".format(media[1]), (10,400),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(0,0,0))
-
-    # cv2.imshow('', frame)
+    #cv2.imshow('', frame)
     #cv2.imshow('imagem in_range', segmentado_cor)
     cv2.waitKey(1)
 
     centro = (frame.shape[0]//2, frame.shape[1]//2)
 
-    return media, centro, maior_contorno_area, cor
+    return media, centro, maior_contorno_area

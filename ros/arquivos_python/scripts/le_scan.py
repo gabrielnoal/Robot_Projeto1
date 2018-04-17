@@ -43,7 +43,7 @@ def scaneou(dado):
 		
 		return True
 	else:
-		print("OK")
+		#print("OK")
 		iteracoes += 1
 		return False
 
