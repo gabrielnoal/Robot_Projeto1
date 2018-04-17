@@ -56,7 +56,7 @@ def roda_todo_frame(imagem):
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		good_matches =  detect_feature.matches(cv_image, imagem_leite)
+		good_matches =  detect_feature.matches(cv_image, kp1, des1, sift)
         media, centro, area =  cor_capa.identifica_cor(cv_image,False)
         Perigo = le_scan.scaneou(dado)
 		depois = time.clock()
@@ -117,6 +117,7 @@ class Follow(smach.State):
                 rospy.sleep(0.01)
                 return 'seguir'
             #PENSAR EM DIFS ACEITÁVEIS PARA ELE CONTINUAR SEGUINDO O OBJETO
+            
         else:
             return 'procurar'
 
@@ -171,8 +172,12 @@ def main():
 	global velocidade_saida
 	rospy.init_node('unico_estado')
 
+	sift = cv2.xfeatures2d.SIFT_create()
+
     imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
     imagem_leite = cv2.imread(imagem_leite,0)
+
+    kp1, des1 = sift.detectAndCompute(imagem_leite,None)
 
     # Para usar a Raspberry Pi
     topico_raspberry_camera = "/raspicam_node/image/compressed"
