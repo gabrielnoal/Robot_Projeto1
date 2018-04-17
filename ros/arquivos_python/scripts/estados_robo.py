@@ -39,35 +39,36 @@ check_delay = True # Só usar se os relógios ROS da Raspberry e do Linux deskto
 
 
 def roda_todo_frame(imagem):
-	global cv_image
-	global good_matches
-	global imagem_leite
+    global cv_image
+    global good_matches
+    global imagem_leite
     global media
     global centro
 
-	now = rospy.get_rostime()
-	imgtime = imagem.header.stamp
-	lag = now-imgtime
-	delay = lag.nsecs
-	print("delay ", "{:.3f}".format(delay/1.0E9))
-	if delay > atraso and check_delay==True:
-		print("Descartando por causa do delay do frame:", delay)
-		return
-	try:
-		antes = time.clock()
-		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		good_matches =  detect_feature.matches(cv_image, kp1, des1, sift)
+    now = rospy.get_rostime()
+    imgtime = imagem.header.stamp
+    lag = now-imgtime
+    delay = lag.nsecs
+    print("delay ", "{:.3f}".format(delay/1.0E9))
+    if delay > atraso and check_delay==True:
+        print("Descartando por causa do delay do frame:", delay)
+        return
+    try:
+        antes = time.clock()
+        cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
+        cv_image2 = cv_image.copy()
+        good_matches =  detect_feature.matches(cv_image2, kp1, des1, sift)
         media, centro, area =  cor_capa.identifica_cor(cv_image,False)
         Perigo = le_scan.scaneou(dado)
-		depois = time.clock()
-		cv2.imshow("Camera", cv_image)
-	except CvBridgeError as e:
-		print('ex', e)
+        depois = time.clock()
+        cv2.imshow("Camera", cv_image)
+        except CvBridgeError as e:
+        print('ex', e)
 ## Classes - estados
 class Searching(smach.State):
-	def __init__(self):
-		smach.State.__init__(self, outcomes=['achou_leite', 'achou_breja', 'achou_obstaculo', 'procurando'])
-	def execute(self, userdata):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['achou_leite', 'achou_breja', 'achou_obstaculo', 'procurando'])
+    def execute(self, userdata):
         if len(media) != 0 and len(centro) != 0:
 			return 'achou_breja'
             
@@ -77,10 +78,10 @@ class Searching(smach.State):
         else if Perigo = True:
             return 'achou_obstaculo'
 
-		else:
-	        vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
-			velocidade_saida.publish(vel)
-			return 'procurando'
+        else:
+            vel = Twist(Vector3(0,0,0), Vector3(0,0,0.3))
+            velocidade_saida.publish(vel)
+            return 'procurando'
 
 class Retreat(smach.State):
     def __init__(self):
@@ -169,10 +170,10 @@ class Survive(smach.State):
 
 # main
 def main():
-	global velocidade_saida
-	rospy.init_node('unico_estado')
+    global velocidade_saida
+    rospy.init_node('unico_estado')
 
-	sift = cv2.xfeatures2d.SIFT_create()
+    sift = cv2.xfeatures2d.SIFT_create()
 
     imagem_leite = 'leite.png'  #Png está em menor resolução que a jpg
     imagem_leite = cv2.imread(imagem_leite,0)
@@ -188,11 +189,11 @@ def main():
     print("Usando ", topico_imagem)
     velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1)
 
-	# Cria uma máquina de estados
-	sm = smach.StateMachine(outcomes=['fim_geral'])
+    # Cria uma máquina de estados
+    sm = smach.StateMachine(outcomes=['fim_geral'])
 
-	# Preenche a Smach com os estados
-	with sm:
+    # Preenche a Smach com os estados
+    with sm:
 	    smach.StateMachine.add('SEARCHING', Searching(),
 	    	transitions={'procurando': 'SEARCHING',
 	    	'achou_leite':'RETREAT', 'achou_breja': 'FOLLOW'
@@ -209,12 +210,12 @@ def main():
             transitions={'procurar' : 'SEARCHING',
             'sobreviver': 'SURVIVE'})
 
-	# Executa a máquina de estados
-	outcome = sm.execute()
+    # Executa a máquina de estados
+    outcome = sm.execute()
 
-	print("Execute finished")
+    print("Execute finished")
 
 
 if __name__ == '__main__':
-	print("Main")
-	main()
+    print("Main")
+    main()
