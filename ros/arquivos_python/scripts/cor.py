@@ -14,7 +14,7 @@ from geometry_msgs.msg import Twist, Vector3, Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Image, CompressedImage, LaserScan
 from cv_bridge import CvBridge, CvBridgeError
-import cor_capa
+import detect_cor
 import detect_feature
 
 
@@ -67,7 +67,7 @@ def roda_todo_frame(imagem):
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
 		cv_image2 = cv_image.copy()
 		good_matches = detect_feature.matches(cv_image2, kp1, des1, sift)
-		media, centro, area = cor_capa.identifica_cor(cv_image,cor_menor, cor_maior)
+		media, centro, area = detect_cor.identifica_cor(cv_image,cor_menor, cor_maior)
 		depois = time.clock()
 		#cv2.putText(cv_image, "Area: {0}".format(area), (10,300),cv2.FONT_HERSHEY_SIMPLEX,1.5,color=(255,255,255))
 		#cv2.imshow("Camera_feature", cv_image2)
