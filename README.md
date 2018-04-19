@@ -1,4 +1,13 @@
 # Robot_Projeto1
+## No terminal bash do seu computador
+
+Rode `sudo code ~/.bashrc` e verifique que os codigos abaixo estão no seu arquivo ~/.bashrc:
+
+    export IPBerry= 192.168.0.113  ##Este Ip é um exemplo. Voçê deve usar o IP que aparece no robo.
+    export ROS_MASTER_URI="http://"$IPBerry":11311"
+    export ROS_IP=hostname -I
+    export TURTLEBOT3_MODEL=burger
+	
 
 ## No PC
 
@@ -45,30 +54,20 @@ Mudar de sub-sessão:`Ctrl A, "` (usar `shift + '` para fazer o `"`)
 
 ## No terminal bash do seu computador
 
-**(1)**
-
-Rode `sudo code ~/.bashrc` e verifique que:
-
-    export IPBerry= 192.168.0.113  ##Este Ip é um exemplo. Voçê deve usar o IP que aparece no robo.
-    export ROS_MASTER_URI="http://"$IPBerry":11311"
-    export ROS_IP=hostname -I
-    export TURTLEBOT3_MODEL=burger
-	
-Estão no seu arquivo ~/.bashrc
         
-**(2)** Agora execute:
+**(1)** Execute:
 
     roscore
 
-**(3)** Para abrir o turtlebot:
+**(2)** Para abrir o turtlebot:
 
     rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 
-**(4)** Sempre que a câmera estiver invertida, rode para ajustá-la:
+**(3)** Sempre que a câmera estiver invertida, rode para ajustá-la:
 
     rosrun rqt_reconfigure rqt_reconfigure
 
-**(5)** Para acionar o comando por teclas:
+**(4)** Para acionar o comando por teclas:
 
     roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
         
